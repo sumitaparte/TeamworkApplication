@@ -1,0 +1,29 @@
+stages:
+    - build
+    - test
+    - deploy
+    
+build:
+    stage: build
+    script: 
+        - chmod +x ./gradlew
+        - ./gradlew
+test:
+    stage: test
+    script:
+        - gradle test
+deploy_dev:
+    stage: deploy
+    only:
+        - dev
+    script:
+        - heroku --version
+        - echo "vidip" | sudo -S dpl --provider=heroku --app=$heroku_app_dev --api-key=$heroku_api_key_dev
+
+deploy_prod:
+    stage: deploy
+    only:
+        - master
+    script:
+        - heroku --version
+        - echo "vidip" | sudo -S dpl --provider=heroku --app=$heroku_app_prod --api-key=$heroku_api_key_prod

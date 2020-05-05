@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="https://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <title>CSCI5308 - Group Formation Tool</title>
+</head>
+<body>
+
+<div sec:authorize="isAuthenticated()">
+    <h4 th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<div>
+    <h2>Survey</h2>
+    <form th:action="@{/question/savesurvey}" th:object="${responseForm}" method="post">
+        <div th:each="ques, quesStat: ${surveyquestions}">
+            <input type="hidden" th:value="${ques.questionID}"
+                   th:attr="name=*{responses[__${quesStat.index}__].questionID}">
+
+            <br><label><span th:text="${ques.questionText}"></span></label>
+            <span th:if="${ques.questionType}=='Numeric'">
+                <input th:field="*{responses[__${quesStat.index}__].response}" required>
+            </span>
+            <span th:if="${ques.questionType}=='MCQ single'">
+                <label>Please select any one:
+                    <select th:field="*{responses[__${quesStat.index}__].response}" required>
+                        <option th:each="op : ${ques.optionValues}" th:value="${op.option + '.'+ op.value}"
+                                th:text="${op.option}"></option>
+                    </select> </label>
+            </span>
+            <span th:if="${ques.questionType}=='MCQ multiple'">
+                <label>Please choose:
+                    <tr th:each="op : ${ques.optionValues}">
+                        <td>
+                            <input type="checkbox" th:field="*{responses[__${quesStat.index}__].mcqResponse}"
+                                   th:value="${ op.option + '.'+ op.value }" required>
+                            <label th:text="${op.option}"></label>
+                        </td>
+                    </tr>
+                </label>
+            </span>
+            <span th:if="${ques.questionType}=='Free Text'">
+                <label><span th:text="${ques.questionText}"></span></label><br/>
+                <textarea id="freeTxt" rows="4" cols="50" th:field="*{responses[__${quesStat.index}__].response}"
+                          required></textarea>
+            </span>
+        </div>
+        <input type="submit" value="SAVE"/>
+        <span th:text="${result}"></span>
+    </form>
+</div>
+</body>
+</html>

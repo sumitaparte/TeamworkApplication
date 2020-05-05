@@ -1,0 +1,8 @@
+Mar. 03, 2020 7:41:27 P.M. CSCI5308.GroupFormationTool.GroupFormationToolLogs log
+INFO: Sign up succesful
+Mar. 03, 2020 7:42:02 P.M. CSCI5308.GroupFormationTool.GroupFormationToolLogs log
+INFO: Sign up succesful
+Mar. 03, 2020 7:43:44 P.M. CSCI5308.GroupFormationTool.GroupFormationToolLogs log
+INFO: Sign up succesful
+Mar. 03, 2020 7:47:11 P.M. CSCI5308.GroupFormationTool.GroupFormationToolLogs log
+INFO: Sign up succesful

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <title>CSCI5308 - Group Formation Tool</title>
+</head>
+<body>
+
+<div sec:authorize="isAuthenticated()">
+    <h4 th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
+    <form method="post" th:action="@{/logout}">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<div>
+    <h2>Survey Editor</h2>
+
+    <div sec:authorize="isAuthenticated()">
+        <h3>All Questions Title</h3>
+        <span th:text="${status}"></span>
+        <form method="post" th:action="@{/survey/saveresponse(courseId=${courseId})}">
+            <table>
+                <tr th:each="sur : ${surveys}">
+                    <td><input name="question" th:value="${sur.questionId}" type="checkbox"></td>
+                    <td><span th:text="${sur.questionTitle}"></span></td>
+                    <td><span th:text="${sur.questionText}"></span></td>
+                </tr>
+            </table>
+            <input type="submit" value="Add to Survey"/>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="https://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <title>CSCI5308 - Group Formation Tool</title>
+</head>
+<body>
+
+<div sec:authorize="isAuthenticated()">
+    <h4 th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<div>
+    <h2>Question Manager</h2>
+    <a th:href="@{/question/questioneditor}">Add Question</a>
+    <div sec:authorize="isAuthenticated()">
+        <h3>All Questions</h3>
+        <label>Filter by :
+            <a th:href="@{/question/questionmanager(by='questionTitle')}">Question Title</a> |
+            <a th:href="@{/question/questionmanager(by='entryDate')}">Entry Date</a>
+        </label>
+        <br>
+        <span th:text="${status}"></span>
+        <br>
+        <table>
+            <tr th:each="question : ${questions}">
+                <td><span th:text="${question.getQuestionTitle()}"></span></td>
+                <td><a th:href="@{/question/deletequestion(id=${question.questionID})}">
+                    <button type="submit" value="delete"
+                            th:onclick="return confirm('Deleting this question will also delete all responses to that question entered by students in the database will also be deleted.\nAre you sure you want to continue?')">
+                        Delete
+                    </button>
+                </a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

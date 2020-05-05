@@ -1,0 +1,2 @@
+Feb. 29, 2020 10:26:48 P.M. CSCI5308.GroupFormationTool.GroupFormationToolLogs log
+INFO: Sign up succesful
